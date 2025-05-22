@@ -25,8 +25,11 @@ class kdlRecipe(ConanFile):
         "CMakeLists.txt",
         "*.in",
         "cmake/*",
+        "doc/*",
         "src/*",
         "tests/*",
+        "models/CMakeLists.txt",
+        "examples/CMakeLists.txt",
     )
 
     def _bypass_test(self):

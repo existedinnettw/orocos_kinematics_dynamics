@@ -675,7 +675,7 @@ void SolverTest::IkVelSolverWDLSTest()
                          ikvelsolver.CartToJnt(q, dx, dq)) ;	// wdls mode
 	CPPUNIT_ASSERT_EQUAL((unsigned int)2,ikvelsolver.getNrZeroSigmas()) ;		//	2 singular values
 	CPPUNIT_ASSERT_EQUAL(ikvelsolver.getLambdaScaled(),
-                         sqrt(1.0-(ikvelsolver.getSigmaMin()/eps)*(ikvelsolver.getSigmaMin()/eps))*lambda) ;
+                         KDL::sqrt(1.0-(ikvelsolver.getSigmaMin()/eps)*(ikvelsolver.getSigmaMin()/eps))*lambda) ;
 
 	std::cout<<"smallest singular value is zero (lambda_scaled=lambda)"<<std::endl;
 

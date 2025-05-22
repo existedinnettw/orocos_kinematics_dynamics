@@ -1,0 +1,4 @@
+**/build/
+*-result.xml
+CMakeUserPresets.json
+.vscode/

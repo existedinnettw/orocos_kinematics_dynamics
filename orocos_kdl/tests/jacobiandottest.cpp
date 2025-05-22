@@ -123,10 +123,10 @@ Jacobian Jdot_d2_symbolic(const JntArray& q,const JntArray& qdot)
     // Returns Jdot for the simple 2DOF arm 
     Jacobian Jdot(q.rows());
     SetToZero(Jdot);
-    Jdot(0,0) =  -L1 * (qdot(0) + qdot(1))*cos(q(0)+q(1))-L0*cos(q(0))*qdot(0);
-    Jdot(0,1) =  -L1 * (qdot(0) + qdot(1))*cos(q(0)+q(1));
-    Jdot(1,0) =  -L1 * (qdot(0) + qdot(1))*sin(q(0)+q(1))-L0*sin(q(0))*qdot(0);
-    Jdot(1,1) =  -L1 * (qdot(0) + qdot(1))*sin(q(0)+q(1));
+    Jdot(0,0) =  -L1 * (qdot(0) + qdot(1))*KDL::cos(q(0)+q(1))-L0*KDL::cos(q(0))*qdot(0);
+    Jdot(0,1) =  -L1 * (qdot(0) + qdot(1))*KDL::cos(q(0)+q(1));
+    Jdot(1,0) =  -L1 * (qdot(0) + qdot(1))*KDL::sin(q(0)+q(1))-L0*KDL::sin(q(0))*qdot(0);
+    Jdot(1,1) =  -L1 * (qdot(0) + qdot(1))*KDL::sin(q(0)+q(1));
     return Jdot;
 }
 
@@ -135,10 +135,10 @@ Jacobian J_d2_symbolic(const JntArray& q,const JntArray& /*qdot*/)
     // Returns J for the simple 2DOF arm
     Jacobian J(q.rows());
     SetToZero(J);
-    J(0,0) =  -L1 * sin(q(0)+q(1))-L0*sin(q(0));
-    J(0,1) =  -L1 * sin(q(0)+q(1));
-    J(1,0) =   L1 * cos(q(0)+q(1))+L0*cos(q(0));
-    J(1,1) =   L1 * cos(q(0)+q(1));
+    J(0,0) =  -L1 * KDL::sin(q(0)+q(1))-L0*KDL::sin(q(0));
+    J(0,1) =  -L1 * KDL::sin(q(0)+q(1));
+    J(1,0) =   L1 * KDL::cos(q(0)+q(1))+L0*KDL::cos(q(0));
+    J(1,1) =   L1 * KDL::cos(q(0)+q(1));
     J(5,0) = J(5,1) = 1;
     return J;
 }

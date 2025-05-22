@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include "framestest.hpp"
 #include <frames_io.hpp>
 #include <utilities/utility.h>
@@ -168,7 +169,7 @@ void FramesTest::TestRotation2(const Vector& v,double a,double b,double c) {
 	R2=Rotation::Rot(v2*1E20,angle);
 	CPPUNIT_ASSERT_EQUAL(R,R2);
 	v2=Vector(6,2,4);
-	CPPUNIT_ASSERT_DOUBLES_EQUAL((v2).Norm(),::sqrt(dot(v2,v2)),epsilon);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL((v2).Norm(),KDL::sqrt(dot(v2,v2)),epsilon);
 }
 
 
@@ -365,17 +366,17 @@ void FramesTest::TestRotation() {
 	TestRangeArbitraryRotation("[0,0,1]", Vector(0,0,1), Vector(0,0,1));
 	TestRangeArbitraryRotation("[0,0,-1]", Vector(0,0,-1), Vector(0,0,-1));
 	// X,Y axes
-	TestRangeArbitraryRotation("[1,1,0]", Vector(1,1,0), Vector(1,1,0)/sqrt(2.0));
-	TestRangeArbitraryRotation("[-1,-1,0]", Vector(-1,-1,0), Vector(-1,-1,0)/sqrt(2.0));
+	TestRangeArbitraryRotation("[1,1,0]", Vector(1,1,0), Vector(1,1,0)/KDL::sqrt(2.0));
+	TestRangeArbitraryRotation("[-1,-1,0]", Vector(-1,-1,0), Vector(-1,-1,0)/KDL::sqrt(2.0));
 	// X,Z axes
-	TestRangeArbitraryRotation("[1,0,1]", Vector(1,0,1), Vector(1,0,1)/sqrt(2.0));
-	TestRangeArbitraryRotation("[-1,0,-1]", Vector(-1,0,-1), Vector(-1,0,-1)/sqrt(2.0));
+	TestRangeArbitraryRotation("[1,0,1]", Vector(1,0,1), Vector(1,0,1)/KDL::sqrt(2.0));
+	TestRangeArbitraryRotation("[-1,0,-1]", Vector(-1,0,-1), Vector(-1,0,-1)/KDL::sqrt(2.0));
 	// Y,Z axes
-	TestRangeArbitraryRotation("[0,1,1]", Vector(0,1,1), Vector(0,1,1)/sqrt(2.0));
-	TestRangeArbitraryRotation("[0,-1,-1]", Vector(0,-1,-1), Vector(0,-1,-1)/sqrt(2.0));
+	TestRangeArbitraryRotation("[0,1,1]", Vector(0,1,1), Vector(0,1,1)/KDL::sqrt(2.0));
+	TestRangeArbitraryRotation("[0,-1,-1]", Vector(0,-1,-1), Vector(0,-1,-1)/KDL::sqrt(2.0));
 	// X,Y,Z axes
-	TestRangeArbitraryRotation("[1,1,1]", Vector(1,1,1), Vector(1,1,1)/sqrt(3.0));
-	TestRangeArbitraryRotation("[-1,-1,-1]", Vector(-1,-1,-1), Vector(-1,-1,-1)/sqrt(3.0));
+	TestRangeArbitraryRotation("[1,1,1]", Vector(1,1,1), Vector(1,1,1)/KDL::sqrt(3.0));
+	TestRangeArbitraryRotation("[-1,-1,-1]", Vector(-1,-1,-1), Vector(-1,-1,-1)/KDL::sqrt(3.0));
 
 	// these change ... some of the -180 are the same as the +180, and some
 	// results are the opposite sign.
@@ -390,33 +391,33 @@ void FramesTest::TestRotation() {
 	// same as +180
 	TestOneRotation("rot([0,0,-1],180)", KDL::Rotation::Rot(KDL::Vector(0,0,-1),180*deg2rad), 180*deg2rad, Vector(0,0,1));
 
-	TestOneRotation("rot([1,0,1],180)", KDL::Rotation::Rot(KDL::Vector(1,0,1),180*deg2rad), 180*deg2rad, Vector(1,0,1)/sqrt(2.0));
+	TestOneRotation("rot([1,0,1],180)", KDL::Rotation::Rot(KDL::Vector(1,0,1),180*deg2rad), 180*deg2rad, Vector(1,0,1)/KDL::sqrt(2.0));
 	// same as +180
-	TestOneRotation("rot([1,0,1],-180)", KDL::Rotation::Rot(KDL::Vector(1,0,1),-180*deg2rad), 180*deg2rad, Vector(1,0,1)/sqrt(2.0));
-	TestOneRotation("rot([-1,0,-1],180)", KDL::Rotation::Rot(KDL::Vector(-1,0,-1),180*deg2rad), 180*deg2rad, Vector(1,0,1)/sqrt(2.0));
+	TestOneRotation("rot([1,0,1],-180)", KDL::Rotation::Rot(KDL::Vector(1,0,1),-180*deg2rad), 180*deg2rad, Vector(1,0,1)/KDL::sqrt(2.0));
+	TestOneRotation("rot([-1,0,-1],180)", KDL::Rotation::Rot(KDL::Vector(-1,0,-1),180*deg2rad), 180*deg2rad, Vector(1,0,1)/KDL::sqrt(2.0));
 	// same as +180
-	TestOneRotation("rot([-1,0,-1],-180)", KDL::Rotation::Rot(KDL::Vector(-1,0,-1),-180*deg2rad), 180*deg2rad, Vector(1,0,1)/sqrt(2.0));
+	TestOneRotation("rot([-1,0,-1],-180)", KDL::Rotation::Rot(KDL::Vector(-1,0,-1),-180*deg2rad), 180*deg2rad, Vector(1,0,1)/KDL::sqrt(2.0));
 
-	TestOneRotation("rot([1,1,0],180)", KDL::Rotation::Rot(KDL::Vector(1,1,0),180*deg2rad), 180*deg2rad, Vector(1,1,0)/sqrt(2.0));
+	TestOneRotation("rot([1,1,0],180)", KDL::Rotation::Rot(KDL::Vector(1,1,0),180*deg2rad), 180*deg2rad, Vector(1,1,0)/KDL::sqrt(2.0));
 	// opposite of +180
-	TestOneRotation("rot([1,1,0],-180)", KDL::Rotation::Rot(KDL::Vector(1,1,0),-180*deg2rad), 180*deg2rad, Vector(1,1,0)/sqrt(2.0));
-	TestOneRotation("rot([-1,-1,0],180)", KDL::Rotation::Rot(KDL::Vector(-1,-1,0),180*deg2rad), 180*deg2rad, Vector(1,1,0)/sqrt(2.0));
+	TestOneRotation("rot([1,1,0],-180)", KDL::Rotation::Rot(KDL::Vector(1,1,0),-180*deg2rad), 180*deg2rad, Vector(1,1,0)/KDL::sqrt(2.0));
+	TestOneRotation("rot([-1,-1,0],180)", KDL::Rotation::Rot(KDL::Vector(-1,-1,0),180*deg2rad), 180*deg2rad, Vector(1,1,0)/KDL::sqrt(2.0));
 	// opposite of +180
-	TestOneRotation("rot([-1,-1,0],-180)", KDL::Rotation::Rot(KDL::Vector(-1,-1,0),-180*deg2rad), 180*deg2rad, Vector(1,1,0)/sqrt(2.0));
+	TestOneRotation("rot([-1,-1,0],-180)", KDL::Rotation::Rot(KDL::Vector(-1,-1,0),-180*deg2rad), 180*deg2rad, Vector(1,1,0)/KDL::sqrt(2.0));
 
-	TestOneRotation("rot([0,1,1],180)", KDL::Rotation::Rot(KDL::Vector(0,1,1),180*deg2rad), 180*deg2rad, Vector(0,1,1)/sqrt(2.0));
+	TestOneRotation("rot([0,1,1],180)", KDL::Rotation::Rot(KDL::Vector(0,1,1),180*deg2rad), 180*deg2rad, Vector(0,1,1)/KDL::sqrt(2.0));
 	// same as +180
-	TestOneRotation("rot([0,1,1],-180)", KDL::Rotation::Rot(KDL::Vector(0,1,1),-180*deg2rad), 180*deg2rad, Vector(0,1,1)/sqrt(2.0));
-	TestOneRotation("rot([0,-1,-1],180)", KDL::Rotation::Rot(KDL::Vector(0,-1,-1),180*deg2rad), 180*deg2rad, Vector(0,1,1)/sqrt(2.0));
+	TestOneRotation("rot([0,1,1],-180)", KDL::Rotation::Rot(KDL::Vector(0,1,1),-180*deg2rad), 180*deg2rad, Vector(0,1,1)/KDL::sqrt(2.0));
+	TestOneRotation("rot([0,-1,-1],180)", KDL::Rotation::Rot(KDL::Vector(0,-1,-1),180*deg2rad), 180*deg2rad, Vector(0,1,1)/KDL::sqrt(2.0));
 	// same as +180
-	TestOneRotation("rot([0,-1,-1],-180)", KDL::Rotation::Rot(KDL::Vector(0,-1,-1),-180*deg2rad), 180*deg2rad, Vector(0,1,1)/sqrt(2.0));
+	TestOneRotation("rot([0,-1,-1],-180)", KDL::Rotation::Rot(KDL::Vector(0,-1,-1),-180*deg2rad), 180*deg2rad, Vector(0,1,1)/KDL::sqrt(2.0));
 
-	TestOneRotation("rot([1,1,1],180)", KDL::Rotation::Rot(KDL::Vector(1,1,1),180*deg2rad), 180*deg2rad, Vector(1,1,1)/sqrt(3.0));
+	TestOneRotation("rot([1,1,1],180)", KDL::Rotation::Rot(KDL::Vector(1,1,1),180*deg2rad), 180*deg2rad, Vector(1,1,1)/KDL::sqrt(3.0));
 	// same as +180
-	TestOneRotation("rot([1,1,1],-180)", KDL::Rotation::Rot(KDL::Vector(1,1,1),-180*deg2rad), 180*deg2rad, Vector(1,1,1)/sqrt(3.0));
-	TestOneRotation("rot([-1,-1,-1],180)", KDL::Rotation::Rot(KDL::Vector(-1,-1,-1),180*deg2rad), 180*deg2rad, Vector(1,1,1)/sqrt(3.0));
+	TestOneRotation("rot([1,1,1],-180)", KDL::Rotation::Rot(KDL::Vector(1,1,1),-180*deg2rad), 180*deg2rad, Vector(1,1,1)/KDL::sqrt(3.0));
+	TestOneRotation("rot([-1,-1,-1],180)", KDL::Rotation::Rot(KDL::Vector(-1,-1,-1),180*deg2rad), 180*deg2rad, Vector(1,1,1)/KDL::sqrt(3.0));
 	// same as +180
-	TestOneRotation("rot([-1,-1,-1],-180)", KDL::Rotation::Rot(KDL::Vector(-1,-1,-1),-180*deg2rad), 180*deg2rad, Vector(1,1,1)/sqrt(3.0));
+	TestOneRotation("rot([-1,-1,-1],-180)", KDL::Rotation::Rot(KDL::Vector(-1,-1,-1),-180*deg2rad), 180*deg2rad, Vector(1,1,1)/KDL::sqrt(3.0));
 
 	TestOneRotation("rot([0.707107, 0, 0.707107", KDL::Rotation::RPY(-2.9811968953315162, -atan(1)*2, -0.1603957582582825), 180*deg2rad, Vector(0.707107,0,0.707107) );
 
@@ -494,15 +495,15 @@ void FramesTest::TestQuaternion() {
     // 45 deg rotation in X
     R = Rotation::EulerZYX(0,0,45*deg2rad);
     R.GetQuaternion(x,y,z,w);
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(x, sin((45*deg2rad)/2), epsilon);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(x, KDL::sin((45*deg2rad)/2), epsilon);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(y, 0, epsilon);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(z, 0, epsilon);
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(w, cos((45*deg2rad)/2), epsilon);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(w, KDL::cos((45*deg2rad)/2), epsilon);
     R2 = Rotation::Quaternion(x,y,z,w);
 	CPPUNIT_ASSERT_EQUAL(R,R2);    
 
     // direct 45 deg rotation in X
-    R2 = Rotation::Quaternion(sin((45*deg2rad)/2), 0, 0, cos((45*deg2rad)/2));
+    R2 = Rotation::Quaternion(KDL::sin((45*deg2rad)/2), 0, 0, KDL::cos((45*deg2rad)/2));
 	CPPUNIT_ASSERT_EQUAL(R,R2);
     R2.GetQuaternion(x2,y2,z2,w2);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(x, x2, epsilon);

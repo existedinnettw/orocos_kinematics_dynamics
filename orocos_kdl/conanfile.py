@@ -24,7 +24,7 @@ class kdlRecipe(ConanFile):
     exports_sources = (
         "CMakeLists.txt",
         "*.in",
-        "cmake/*",
+        "cmake/CheckSTLContainers.cmake",
         "doc/*",
         "src/*",
         "tests/*",
@@ -44,7 +44,7 @@ class kdlRecipe(ConanFile):
         return False
 
     def requirements(self):
-        self.requires("eigen/[~3]")
+        self.requires("eigen/[~3]", transitive_headers=True)
         self.tool_requires("cmake/[>=3.12 <5]")
         if not self._bypass_test():
             self.test_requires("cppunit/[>=1.14.0 <2]")
@@ -85,4 +85,8 @@ class kdlRecipe(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.libs = ["orocos-kdl"]  # orocos-kdl-models
+        self.cpp_info.libs = []
+        if self.settings.get_safe("build_type") == "Debug":
+            self.cpp_info.libs.append("orocos-kdld")
+        else:
+            self.cpp_info.libs.append("orocos-kdl")

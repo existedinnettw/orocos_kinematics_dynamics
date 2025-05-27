@@ -4,13 +4,10 @@ FILE( GLOB KDL_HPPS [^.]*.hpp [^.]*.inl)
 FILE( GLOB UTIL_HPPS utilities/[^.]*.h utilities/[^.]*.hpp)
 
 #In Windows (Visual Studio) it is necessary to specify the postfix
-#of the debug library name and no symbols are exported by kdl, 
-#so it is necessary to compile it as a static library
+#of the debug library name
 IF(MSVC)
     SET(CMAKE_DEBUG_POSTFIX "d")
-    SET(LIB_TYPE STATIC)
-ELSE(MSVC)
-    SET(LIB_TYPE SHARED)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 ENDIF(MSVC)
 
 CONFIGURE_FILE(config.h.in config.h @ONLY)
@@ -72,7 +69,7 @@ ENDIF()
 # Needed so that the generated config.h can be used
 TARGET_INCLUDE_DIRECTORIES(orocos-kdl PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>")
-TARGET_LINK_LIBRARIES(orocos-kdl ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(orocos-kdl ${Boost_LIBRARIES} Eigen3::Eigen)
 
 INSTALL(TARGETS orocos-kdl
   EXPORT OrocosKDLTargets

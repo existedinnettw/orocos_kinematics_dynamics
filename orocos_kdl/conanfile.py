@@ -86,7 +86,10 @@ class kdlRecipe(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = []
-        if self.settings.get_safe("build_type") == "Debug":
+        if (
+            self.settings.get_safe("build_type") == "Debug"
+            and self.settings.get_safe("compiler") == "msvc"
+        ):
             self.cpp_info.libs.append("orocos-kdld")
         else:
             self.cpp_info.libs.append("orocos-kdl")

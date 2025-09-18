@@ -52,6 +52,13 @@ ADD_LIBRARY(orocos-kdl ${LIB_TYPE} ${KDL_SRCS})
 TARGET_INCLUDE_DIRECTORIES(orocos-kdl PUBLIC
   "$<INSTALL_INTERFACE:include>")
 
+# Define export macro for windows shared builds so data symbols are exported.
+if (WIN32 AND BUILD_SHARED_LIBS)
+  target_compile_definitions(orocos-kdl PRIVATE OROCOS_KDL_BUILD_SHARED)
+  # Consumers will see PUBLIC OROCOS_KDL_USE_SHARED to trigger dllimport
+  target_compile_definitions(orocos-kdl PUBLIC OROCOS_KDL_USE_SHARED)
+endif()
+
 SET_TARGET_PROPERTIES( orocos-kdl PROPERTIES
   SOVERSION "${KDL_VERSION_MAJOR}.${KDL_VERSION_MINOR}"
   VERSION "${KDL_VERSION}"
